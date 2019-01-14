@@ -3,7 +3,6 @@
 
 # pytest looks for test_*.py and *_test.py files like this one...
 
-
 import Foo
 
 def test_Baz0():  # ...and looks for test_*()  functions within the files it finds. (NB: it will not find methods, unless they belong to a class whose name begins with Test and which has no __init__.)
@@ -23,9 +22,9 @@ if __name__ == '__main__':
 	# Note that this route will capture less detail about assertion failures.
 	
 	import sys
-	objects = list( globals().items() )
-	for name, func in objects:
+	for name in dir():
 		if not name.startswith( 'test_' ): continue
+		func = globals()[ name ]
 		if not callable( func ): continue
 		try:
 			func()
