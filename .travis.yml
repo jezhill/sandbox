@@ -23,5 +23,6 @@ matrix:
           language: generic
           install:
             #- brew install pyenv-virtualenv
-            - pip install pytest
-            - pip install .
+            - python3 -m pip install pytest
+            - python3 -m pip install .
+          script: python3 -m pytest -v .
