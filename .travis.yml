@@ -5,17 +5,6 @@ os:
     - osx
     - windows
     
-python:
-# as at 20190114 travis-ci.com versions start at 2.6 and 3.2
-    - "2.6"
-    - "2.7"
-    - "3.2"  # pytest does not support this version
-    - "3.3"  # pytest does not support this version
-    - "3.4"
-    - "3.5"
-    - "3.6"
-    - "3.7-dev"  # 3.7 not available yet (last checked 20190114)
-
 # pip install -r requirements.txt
 install:
     - pip install .
