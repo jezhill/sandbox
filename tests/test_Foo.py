@@ -22,6 +22,7 @@ if __name__ == '__main__':
 	# (of course, we would need to call a wrapper script to detect that fact).
 	# Note that this route will capture less detail about assertion failures.
 	
+	import sys
 	objects = list( globals().items() )
 	for name, func in objects:
 		if not name.startswith( 'test_' ): continue
