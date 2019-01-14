@@ -12,16 +12,16 @@ matrix:
     include:
         #- python: "2.6"
         #- python: "2.7"
-        - python: "3.2" # pytest does not support this version
+        #- python: "3.2" # pytest does not support this version
         #- python: "3.3" # pytest does not support this version
         #- python: "3.4"
         #- python: "3.5"
         #- python: "3.6"
-        - python: "3.7-dev" # 3.7 not available yet (last checked 20190114)
+        #- python: "3.7-dev" # 3.7 not available yet (last checked 20190114)
           
         - os: osx
           language: generic
           install:
-            - brew install pyenv-virtualenv
+            #- brew install pyenv-virtualenv
             - pip install pytest
             - pip install .
