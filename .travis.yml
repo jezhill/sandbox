@@ -10,19 +10,21 @@ script:
 
 matrix:
     include:
-        #- python: "2.6"
-        #- python: "2.7"
-        #- python: "3.2" # pytest does not support this version
-        #- python: "3.3" # pytest does not support this version
-        #- python: "3.4"
-        #- python: "3.5"
-        #- python: "3.6"
-        #- python: "3.7-dev" # 3.7 not available yet (last checked 20190114)
+        - python: "2.6"
+        - python: "2.7"
+        - python: "3.2" # pytest does not support this version
+        - python: "3.3" # pytest does not support this version
+        - python: "3.4"
+        - python: "3.5"
+        - python: "3.6"
+        - python: "3.7-dev" # 3.7 not available yet (last checked 20190114)
+          
+        - os: osx   # seems to come with python and python3 but it's less clear how to take control of precise version---maybe via `brew install pyenv-virtualenv` (which takes a loooong time) plus (unknown) extra steps
+          language: generic
+          install: python2 -m pip install pytest .
+          script:  python2 -m pytest -v .
           
         - os: osx
           language: generic
-          install:
-            #- brew install pyenv-virtualenv
-            - python3 -m pip install pytest
-            - python3 -m pip install .
-          script: python3 -m pytest -v .
+          install: python3 -m pip install pytest .
+          script:  python3 -m pytest -v .

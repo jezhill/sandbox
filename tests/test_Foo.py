@@ -20,8 +20,10 @@ if __name__ == '__main__':
 	# directly/explicitly if pytest is unavailable, as it is in python 3.0--3.3
 	# (of course, we would need to call a wrapper script to detect that fact).
 	# Note that this route will capture less detail about assertion failures.
-	
-	import sys
+	import os, sys
+	sys.stderr.write( '========================= running non-pytest tests ===========================\n' )
+	sys.stderr.write( 'platform %s -- Python %s -- %s\n' % ( sys.platform, sys.version.split()[ 0 ], sys.executable ) )
+	sys.stderr.write( 'running %s\n\n' % os.path.realpath( __file__ ) )
 	for name in dir():
 		if not name.startswith( 'test_' ): continue
 		func = globals()[ name ]
@@ -34,3 +36,4 @@ if __name__ == '__main__':
 			sys.stderr.write( '\n' )
 		else:
 			sys.stderr.write( func.__name__ + ' PASSED\n' )
+	sys.stderr.write( '==============================================================================\n' )
