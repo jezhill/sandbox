@@ -1,32 +1,27 @@
+os: linux            # linux, osx (custom installation commands required for python),  windows (no python support yet as at 20190114)
 language: python
 
-# pip install -r requirements.txt
 install:
+    #- pip install -r requirements.txt
     - pip install .
 
 script:
     - python -c "import pytest" && pytest -v . || python ./tests/test_Foo.py 
 
-    #- osx       # as at 20190114 osx supposedly supports python but none of the versions below work (if python versions are omitted, the default of 2.7 also says it's unavailable)
-    #- windows   # python not yet supported as at 20190114
-
 matrix:
     include:
-        - os: linux
-          python:
-              # as at 20190114 travis-ci.com Python versions available on linux start at 2.6 and 3.2
-              - "2.6"   
-              #- "2.7"  
-              #- "3.2"  # pytest does not support this version
-              #- "3.3"  # pytest does not support this version
-              #- "3.4"
-              #- "3.5"
-              #- "3.6"
-              - "3.7-dev"  # 3.7 not available yet (last checked 20190114)
+        #- python: "2.6"
+        #- python: "2.7"
+        - python: "3.2" # pytest does not support this version
+        #- python: "3.3" # pytest does not support this version
+        #- python: "3.4"
+        #- python: "3.5"
+        #- python: "3.6"
+        - python: "3.7-dev" # 3.7 not available yet (last checked 20190114)
           
         - os: osx
           language: generic
           install:
             - brew install pyenv-virtualenv
-              pip install pytest
-              pip install .
+            - pip install pytest
+            - pip install .
