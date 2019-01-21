@@ -16,10 +16,10 @@ def test_Baz3():
 
 
 if __name__ == '__main__':
-	# pytest doesn't go here, but we could set things up to run this script
-	# directly/explicitly if pytest is unavailable, as it is in python 3.0--3.3
-	# (of course, we would need to call a wrapper script to detect that fact).
-	# Note that this route will capture less detail about assertion failures.
+	# pytest doesn't enter this section, but we could set things up to run this script
+	# directly/explicitly if pytest is unavailable (as is the case in python 3.0--3.3)---
+	# of course, we would need to call a wrapper script to detect that fact.
+	# Note that this route will capture less detail than pytest about assertion failures.
 	import os, sys
 	sys.stderr.write( '========================= running non-pytest tests ===========================\n' )
 	sys.stderr.write( 'platform %s -- Python %s -- %s\n' % ( sys.platform, sys.version.split()[ 0 ], sys.executable ) )
@@ -30,7 +30,7 @@ if __name__ == '__main__':
 		if not callable( func ): continue
 		try:
 			func()
-		except AssertionError:
+		except:
 			sys.stderr.write( func.__name__ + ' FAILED:\n' )
 			sys.excepthook( *sys.exc_info() )
 			sys.stderr.write( '\n' )
