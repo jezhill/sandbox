@@ -17,7 +17,8 @@ matrix:
         - python: "3.4"
         - python: "3.5"
         - python: "3.6"
-        - python: "3.7-dev" # 3.7 not available yet (last checked 20190114)
+        - python: "3.7" # 3.7 was not available when last checked (20190114) so used "3.7-dev"
+        - python: "3.8"
           
         - os: osx   # seems to come with python and python3 but it's less clear how to take control of precise version---maybe via `brew install pyenv-virtualenv` (which takes a loooong time) plus (unknown) extra steps
           language: generic
