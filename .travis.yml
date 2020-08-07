@@ -1,7 +1,7 @@
-os: linux            # linux, osx (custom installation commands required for python),  windows (no python support yet as at 20190114)
+os: linux
 arch: x64
 language: python
-env: PYTHON=python
+env: PYTHON=python   # 'python' points to Python 2.7 on macOS but points to Python 3.8 on Linux and Windows; 'python3' is a 'command not found' error on Windows
 install:
     - $PYTHON -c "import sys, platform; print(platform.machine()); print(platform.architecture()); print(sys.maxsize)"
     - $PYTHON -m pip install --upgrade pip
@@ -23,11 +23,11 @@ matrix:
         - python: "3.6"
         - python: "3.7"
         - python: "3.8"
-        - python: "3.9-dev" # no 3.9 available on Travis as at 20200807
+        - python: "3.9-dev" # no full release of 3.9 available on Travis as at 20200807
           
-        - name: "Python 3.8 on 32-bit Linux"
-          arch: x86
-          python: 3.8
+        #- name: "Python 3.8 on 32-bit Linux"
+        #  arch: x86     # weirdly, the architecture is reported as i386 in the Travis matrix, but sys.maxsize is still 9223372036854775807, platform.machine() is still 'x86_64' and platform.architecture() is still ('64bit', 'ELF')
+        #  python: 3.8
           
         - name: "Python 2.x on macOS"
           os: osx   # seems to come with python and python3 but it's less clear how to take control of precise version---maybe via `brew install pyenv-virtualenv` (which takes a loooong time) plus (unknown) extra steps
@@ -60,12 +60,12 @@ matrix:
           before_install:
               - choco install python --version=3.8
 
-        - name: "Python 3.8 on 32-bit Windows"
-          os: windows
-          arch: x86
-          language: shell
-          env:
-              - PYTHON=python
-              - PATH=/c/Python38:/c/Python38/Scripts:$PATH      # note that the path must change according to the Python version
-          before_install:
-              - choco install python --version=3.8
+        #- name: "Python 3.8 on 32-bit Windows"
+        #  os: windows
+        #  arch: x86  # This appears to have no effect. The architecture is still reported as AMD64 in the Travis matrix, and the printed values all show that 64-bit Python is running
+        #  language: shell
+        #  env:
+        #      - PYTHON=python
+        #      - PATH=/c/Python38:/c/Python38/Scripts:$PATH      # note that the path must change according to the Python version
+        #  before_install:
+        #      - choco install python --version=3.8
