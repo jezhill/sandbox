@@ -1,31 +1,47 @@
 os: linux            # linux, osx (custom installation commands required for python),  windows (no python support yet as at 20190114)
 language: python
-
+env: PYTHON=python
 install:
-    #- pip install -r requirements.txt
-    - pip install .
+    - python -m pip install --upgrade pip
+    - python -m pip install pytest
+    - python -m pip install .
+    #- python -m pip install -r requirements.txt
 
 script:
-    - python -c "import pytest" && pytest -v . || python ./tests/test_Foo.py 
+    - python -m pytest -v .
 
 matrix:
     include:
-        - python: "2.6"
+        #- python: "2.6"  # update 20200807: Travis no longer supports this
         - python: "2.7"
-        - python: "3.2" # pytest does not support this version
-        - python: "3.3" # pytest does not support this version
+        #- python: "3.2" # pytest does not support this version; update 20200807: Travis no longer supports this either
+        #- python: "3.3" # pytest does not support this version; update 20200807: Travis no longer supports this either
         - python: "3.4"
         - python: "3.5"
         - python: "3.6"
-        - python: "3.7" # 3.7 was not available when last checked (20190114) so used "3.7-dev"
+        - python: "3.7"
         - python: "3.8"
+        - python: "3.9"
           
-        - os: osx   # seems to come with python and python3 but it's less clear how to take control of precise version---maybe via `brew install pyenv-virtualenv` (which takes a loooong time) plus (unknown) extra steps
+        - name: "Python 2.x on macOS"
+          os: osx   # seems to come with python and python3 but it's less clear how to take control of precise version---maybe via `brew install pyenv-virtualenv` (which takes a loooong time) plus (unknown) extra steps
           language: generic
+          env: PYTHON=python2
           install: python2 -m pip install pytest .
           script:  python2 -m pytest -v .
           
-        - os: osx
+        - name: "Python 3.x on macOS"
+          os: osx
           language: generic
+          env: PYTHON=python3
           install: python3 -m pip install pytest .
           script:  python3 -m pytest -v .
+
+        - name: "Python 3.8 on Windows"
+          os: windows
+          language: shell
+          before_install:
+              - choco install python --version 3.8
+          env:
+              - PATH=/c/Python38:/c/Python38/Scripts:$PATH
+              - PYTHON=python
