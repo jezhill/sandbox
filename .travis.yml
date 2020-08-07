@@ -1,7 +1,9 @@
 os: linux            # linux, osx (custom installation commands required for python),  windows (no python support yet as at 20190114)
+arch: x64
 language: python
 env: PYTHON=python
 install:
+    - $PYTHON -c "import platform; print(platform.machine()); print(platform.architecture())"
     - $PYTHON -m pip install --upgrade pip
     - $PYTHON -m pip install pytest
     - $PYTHON -m pip install .
@@ -23,6 +25,10 @@ matrix:
         - python: "3.8"
         - python: "3.9-dev" # no 3.9 available on Travis as at 20200807
           
+        - name: "Python 3.8 on 32-bit Linux"
+          arch: x86
+          python: 3.8
+          
         - name: "Python 2.x on macOS"
           os: osx   # seems to come with python and python3 but it's less clear how to take control of precise version---maybe via `brew install pyenv-virtualenv` (which takes a loooong time) plus (unknown) extra steps
           language: generic
@@ -36,27 +42,28 @@ matrix:
         - name: "Python 2.7 on Windows"
           os: windows
           language: shell
-          before_install:
-              - choco install python --version=2.7.11
           env:
-              - PATH=/c/Python27:/c/Python27/Scripts:$PATH      # note that the path must change according to the Python version
               - PYTHON=python
+              - PATH=/c/Python27:/c/Python27/Scripts:$PATH      # note that the path must change according to the Python version
+          before_install:
+              - choco install python --version=2.7.11  # 2.7.11 appears to be the last 2.x version chocolatey offers, and you can't get away with saying just 2.7
+              - $PYTHON -m ensurepip # only seems necessary on Python 2.7 for Windows
 
         - name: "Python 3.8 on Windows"
           os: windows
           language: shell
+          env:
+              - PYTHON=python
+              - PATH=/c/Python38:/c/Python38/Scripts:$PATH      # note that the path must change according to the Python version
           before_install:
               - choco install python --version=3.8
-          env:
-              - PATH=/c/Python38:/c/Python38/Scripts:$PATH      # note that the path must change according to the Python version
-              - PYTHON=python
 
         - name: "Python 3.8 on 32-bit Windows"
           os: windows
           arch: x86
           language: shell
+          env:
+              - PYTHON=python
+              - PATH=/c/Python38:/c/Python38/Scripts:$PATH      # note that the path must change according to the Python version
           before_install:
               - choco install python --version=3.8
-          env:
-              - PATH=/c/Python38:/c/Python38/Scripts:$PATH      # note that the path must change according to the Python version
-              - PYTHON=python
