@@ -2,13 +2,13 @@ os: linux            # linux, osx (custom installation commands required for pyt
 language: python
 env: PYTHON=python
 install:
-    - python -m pip install --upgrade pip
-    - python -m pip install pytest
-    - python -m pip install .
-    #- python -m pip install -r requirements.txt
+    - $PYTHON -m pip install --upgrade pip
+    - $PYTHON -m pip install pytest
+    - $PYTHON -m pip install .
+    #- $PYTHON -m pip install -r requirements.txt
 
 script:
-    - python -m pytest -v .
+    - $PYTHON -m pytest -v .
 
 matrix:
     include:
@@ -21,27 +21,26 @@ matrix:
         - python: "3.6"
         - python: "3.7"
         - python: "3.8"
-        - python: "3.9"
+        - python: "3.9-dev" # no 3.9 available on Travis as at 20200807
           
         - name: "Python 2.x on macOS"
           os: osx   # seems to come with python and python3 but it's less clear how to take control of precise version---maybe via `brew install pyenv-virtualenv` (which takes a loooong time) plus (unknown) extra steps
           language: generic
           env: PYTHON=python2
-          install: python2 -m pip install pytest .
-          script:  python2 -m pytest -v .
           
         - name: "Python 3.x on macOS"
           os: osx
           language: generic
           env: PYTHON=python3
-          install: python3 -m pip install pytest .
-          script:  python3 -m pytest -v .
+
+        - name: "Python 2.7 on Windows"
+          os: windows
+          language: shell
+          before_install: choco install python --version 2.7
+          env: PATH=/c/Python27:/c/Python27/Scripts:$PATH      # note that the path must change according to the Python version
 
         - name: "Python 3.8 on Windows"
           os: windows
           language: shell
-          before_install:
-              - choco install python --version 3.8
-          env:
-              - PATH=/c/Python38:/c/Python38/Scripts:$PATH
-              - PYTHON=python
+          before_install: choco install python --version 3.8
+          env: PATH=/c/Python38:/c/Python38/Scripts:$PATH      # note that the path must change according to the Python version
