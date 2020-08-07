@@ -3,7 +3,7 @@ arch: x64
 language: python
 env: PYTHON=python
 install:
-    - $PYTHON -c "import platform; print(platform.machine()); print(platform.architecture())"
+    - $PYTHON -c "import sys, platform; print(platform.machine()); print(platform.architecture()); print(sys.maxsize)"
     - $PYTHON -m pip install --upgrade pip
     - $PYTHON -m pip install pytest
     - $PYTHON -m pip install .
@@ -39,15 +39,17 @@ matrix:
           language: generic
           env: PYTHON=python3
 
-        - name: "Python 2.7 on Windows"
-          os: windows
-          language: shell
-          env:
-              - PYTHON=python
-              - PATH=/c/Python27:/c/Python27/Scripts:$PATH      # note that the path must change according to the Python version
-          before_install:
-              - choco install python --version=2.7.11  # 2.7.11 appears to be the last 2.x version chocolatey offers, and you can't get away with saying just 2.7
-              - $PYTHON -m ensurepip # only seems necessary on Python 2.7 for Windows
+        #- name: "Python 2.7 on Windows"
+        #  os: windows
+        #  language: shell
+        #  env:
+        #      - PYTHON=python
+        #      - PATH=/c/Python27:/c/Python27/Scripts:$PATH      # note that the path must change according to the Python version
+        #  before_install:
+        #      - choco install python --version=2.7.11  # 2.7.11 appears to be the last 2.x version chocolatey offers, and you can't get away with saying just 2.7
+        #      - $PYTHON -m ensurepip # Python 2.7 for Windows seems to ship without pip
+        #      # Unfortunately ensurepip fails with an AttributeError deep inside pip-1.5.6-py2.py3-none-any.whl/pip/_vendor/distlib/scripts.py
+        #      # So that's a deal-breaker, unless we somehow work around the complete absence of pip
 
         - name: "Python 3.8 on Windows"
           os: windows
