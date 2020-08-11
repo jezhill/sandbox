@@ -2,7 +2,7 @@ os: linux
 arch: x64
 language: python
 env: PYTHON=python   # 'python' points to Python 2.7 on macOS but points to Python 3.8 on Linux and Windows; 'python3' is a 'command not found' error on Windows
-install:
+install: # NB: you can't have a colon anywhere in the line (hence '%c' % 58)
     - $PYTHON -c 'import sys,struct,platform;print("{\n%s}"%"".join("    %25r %c %r,\n"%(c,58,eval(c)) for c in """struct.calcsize("P")*8 sys.maxsize platform.machine() platform.architecture()""".split()))'
     - $PYTHON -m pip install --upgrade pip
     - $PYTHON -m pip install pytest

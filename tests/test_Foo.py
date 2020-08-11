@@ -13,6 +13,7 @@ def test_Baz1():
 	
 def test_Baz3():
 	assert Foo.Bar.Baz( 1, 2, 3 ) == '1-2-3'
+	import sys,struct,platform;print("{\n%s}"%"".join("    %25r %c %r,\n"%(c,58,eval(c)) for c in """struct.calcsize("P")*8 sys.maxsize platform.machine() platform.architecture()""".split()))
 
 
 if __name__ == '__main__':
