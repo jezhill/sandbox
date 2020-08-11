@@ -25,9 +25,9 @@ matrix:
         - python: "3.8"
         - python: "3.9-dev" # no full release of 3.9 available on Travis as at 20200807
           
-        - name: "Python 3.8 on 32-bit Linux"
-          arch: x86     # weirdly, the architecture is reported as i386 in the Travis matrix, but sys.maxsize is still 9223372036854775807, platform.machine() is still 'x86_64' and platform.architecture() is still ('64bit', 'ELF')
-          python: 3.8
+        #- name: "Python 3.8 on 32-bit Linux"
+        #  arch: x86     # weirdly, the architecture is reported as i386 in the Travis matrix, but sys.maxsize is still 9223372036854775807, platform.machine() is still 'x86_64' and platform.architecture() is still ('64bit', 'ELF')
+        #  python: 3.8
           
         - name: "Python 2.x on macOS"
           os: osx   # seems to come with python and python3 but it's less clear how to take control of precise version---maybe via `brew install pyenv-virtualenv` (which takes a loooong time) plus (unknown) extra steps

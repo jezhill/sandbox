@@ -4,11 +4,9 @@
 # pytest looks for test_*.py and *_test.py files like this one...
 
 import Foo
-import sys,struct,platform
 
 def test_Baz0():  # ...and looks for test_*()  functions within the files it finds. (NB: it will not find methods, unless they belong to a class whose name begins with Test and which has no __init__.)
 	assert Foo.Bar.Baz() == '' # In most cases you should use one assertion per function because, within any given function pytest won't go past the first failure.
-	assert struct.calcsize("P")*8 == 32 
 	
 def test_Baz1():
 	assert Foo.Bar.Baz( 1 ) == '1'
